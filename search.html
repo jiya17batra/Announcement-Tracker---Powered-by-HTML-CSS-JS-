@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements Tracker</title>
+    <link rel="stylesheet" href="search.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: cyan;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px cyan;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: black;
+            color: cyan;
+            border: 1px solid cyan;
+            border-radius: 5px;
+        }
+
+        .event {
+            border: 1px solid cyan;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .bookmark-btn {
+            background-color: cyan;
+            color: black;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .bookmark-btn:hover {
+            background-color: #00dfc4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Announcements Tracker</h1>
+        <input type="text" id="search" placeholder="Search events...">
+        <select id="filter-type">
+            <option value="">All Types</option>
+            <option value="hackathon">Hackathon</option>
+            <option value="webinar">Webinar</option>
+            <option value="conference">Conference</option>
+        </select>
+        <div id="events-list"></div>
+        <h2>Bookmarked Events</h2>
+        <div id="bookmarked-events"></div>
+
+        <!-- Upload Event Form -->
+        <h2>Upload Event</h2>
+        <form id="upload-event-form">
+            <input type="text" id="event-name" placeholder="Event Name" required>
+            <input type="date" id="event-date" required>
+            <select id="event-type" required>
+                <option value="hackathon">Hackathon</option>
+                <option value="webinar">Webinar</option>
+                <option value="conference">Conference</option>
+            </select>
+            <input type="url" id="event-registration-link" placeholder="Registration Link" required>
+            <button type="submit">Upload Event</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

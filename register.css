@@ -1,0 +1,145 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: black;
+    color: rgb(239, 229, 229);
+    overflow: hidden;
+    perspective: 1000px; /* Enables 3D effect */
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between; /* Space between h1 and button container */
+    align-items: center; /* Center items vertically */
+    width: 100%; /* Full width */
+    padding: 20px; /* Add some padding */
+}
+
+/* Registration Container */
+.register-container {
+    width: 450px;
+    max-width: 90%;
+    text-align: center;
+    padding: 40px;
+    border-radius: 20px;
+    border: 8px solid rgba(0, 223, 196, 0.8);
+    box-shadow: 0 0 20px rgba(0, 223, 196, 0.5);
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+}
+
+.register-container.flipped {
+    transform: rotateY(180deg);
+}
+
+.title {
+    color: #00dfc4;
+    font-size: 2em;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* Input Fields & Select */
+.register-box input, 
+.register-box select {
+    width: 100%;
+    background-color: #1a1a1a;
+    color: #00dfc4;
+    border: 2px solid #00dfc4;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 1em;
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+
+.register-box input:focus, 
+.register-box select:focus {
+    border-color: #00dfc4;
+    box-shadow: 0 0 8px rgba(0, 223, 196, 0.8);
+    outline: none;
+}
+
+.register-box label {
+    color: #00dfc4;
+    font-size: 0.9em;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+/* Button Styling */
+.register-box button {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.2em;
+    background: linear-gradient(45deg, #00dfc4, #009e8c);
+    color: #191970;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+.register-box button:hover {
+    background: linear-gradient(45deg, #009e8c, #007a6f);
+}
+
+/* Button Container */
+.button-container {
+    display: flex; /* Use flexbox for button alignment */
+}
+
+.button {
+    margin-left: 10px; /* Space between buttons */
+    padding: 10px 15px; /* Button padding */
+    text-decoration: none; /* Remove underline */
+    background-color: #007BFF; /* Button background color */
+    color: white; /* Button text color */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Falling Leaves Animation */
+.leaf {
+    position: absolute;
+    top: -10vh;
+    width: 20px;
+    height: 20px;
+    background: url('leaf.png') no-repeat center/contain;
+    opacity: 0.7;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-10vh) rotate(0deg); }
+    100% { transform: translateY(110vh) rotate(360deg); }
+}
+
+.register-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcement Nexus</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap">
+    <style>
+        @font-face {
+    font-family: "bw";
+    src: url("https://robindelaporte.fr/codepen/play/BwModelicaSS01-ExtraBold.woff") format("woff");
+}
+
+body {
+    background: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.announcement {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-top: 80px; 
+    color: white;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+}
+
+.nav-button {
+    font-family: "bw";
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    background-color: #acc7ed;
+    border-radius: 10rem;
+    padding: 10px 20px;
+    position: relative;
+    display: inline-block;
+    overflow: hidden; /* Ensure the pseudo-elements don't overflow */
+    transition: transform 0.3s ease; /* Smooth scaling */
+}
+
+.nav-button span {
+    position: relative;
+    z-index: 2; /* Ensure text is above the pseudo-elements */
+}
+
+.nav-button:after,
+.nav-button:before {
+    content: "";
+    background: linear-gradient(56deg, #61dafb 0%, #d6cbf6 46%, #f2056f 100%);
+    position: absolute;
+    border-radius: 10rem;
+    transition: opacity 0.4s ease; /* Smooth opacity transition */
+}
+
+.nav-button:after {
+    width: 80%;
+    height: 20%;
+    bottom: -4px;
+    left: 10%;
+    opacity: 0; /* Initially hidden */
+    filter: blur(15px);
+}
+
+.nav-button:before {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0; /* Initially hidden */
+}
+
+.nav-button:hover {
+    transform: scale(1.2); /* Scale up on hover */
+}
+
+.nav-button:hover:after,
+.nav-button:hover:before {
+    opacity: 1; /* Show the pseudo-elements on hover */
+    transition: opacity 0.6s ease; /* Smooth opacity transition */
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="fluid">Announcement<br /> Nexus</h1>
+        <nav class="navbar">
+            <a href="search.html" class="nav-button"><span>Search Events</span></a>
+            <a href="register.html" class="nav-button"><span>Register</span></a>
+            <a href="aboutus.html" class="nav-button"><span>About Us</span></a>
+        </nav>
+    </header>
+    <main>
+        <section class="content fluid">
+            <h2><span aria-hidden="true">Enter the world of&nbsp;</span>
+                <span class="sr-only">Stay Updated!</span>
+            </h2>
+            <ul aria-hidden="true" style="--count: 30">
+                <li style="--i: 0">Collaboration.</li>
+                <li style="--i: 1">Growth.</li>
+                <li style="--i: 2">Creativity.</li>
+                <li style="--i: 3">Technology.</li>
+                <li style="--i: 4">Develop.</li>
+                <li style="--i: 14">Innovate.</li>
+                <li style="--i: 18">Visualize.</li>
+                <li style="--i: 19">Transform.</li>
+                <li style="--i: 6">Design.</li>
+                <li style="--i: 7">Networking.</li>
+                <li style="--i: 8">Inspiration.</li>
+                <li style="--i: 9">prompt.</li>
+                <li style="--i: 10">collaborate.</li>
+                <li style="--i: 11">Breakthroughs.</li>
+                <li style="--i: 12">Impact.</li>
+                <li style="--i: 13">follow.</li>
+                <li style="--i: 21">Updates!</li>
+            </ul>
+        </section>
+        <section>
+            <h2 class="fluid"> "Track Every Announcement, Anytime!"</h2>
+        </section>
+    </main>
+    <footer>Scene set, plans met -- no event left unmet! </footer>
+    <script type="module">
+        import { Pane } from 'https://cdn.skypack.dev/tweakpane@4.0.4';
+        import gsap from 'https://cdn.skypack.dev/gsap@3.12.0';
+        import ScrollTrigger from 'https://cdn.skypack.dev/gsap@3.12.0/ScrollTrigger';        let items;
+        let scrollerScrub;
+        let dimmerScrub;
+        let chromaEntry;
+        let chromaExit;
+
+        const update = () => {
+            document.documentElement.dataset.theme = config.theme;
+            document.documentElement.dataset.syncScrollbar = config.scroll;
+            document.documentElement.dataset.animate = config.animate;
+            document.documentElement.dataset.snap = config.snap;
+            document.documentElement.dataset.debug = config.debug;
+            document.documentElement.style.setProperty('--start', config.start);
+            document.documentElement.style.setProperty('--hue', config.start);
+            document.documentElement.style.setProperty('--end', config.end);
+
+            if (!config.animate) {
+                chromaEntry?.scrollTrigger.disable(true, false);
+                chromaExit?.scrollTrigger.disable(true, false);
+                dimmerScrub?.disable(true, false);
+                scrollerScrub?.disable(true, false);
+                gsap.set(items, { opacity: 1 });
+                gsap.set(document.documentElement, { '--chroma': 0 });
+            } else {
+                gsap.set(items, { opacity: (i) => (i !== 0 ? 0.2 : 1) });
+                dimmerScrub.enable(true, true);
+                scrollerScrub.enable(true, true);
+                chromaEntry.scrollTrigger.enable(true, true);
+                chromaExit.scrollTrigger.enable(true, true);
+            }
+        };
+
+        const sync = (event) => {
+            if (
+                !document.startViewTransition ||
+                event.target.controller.view.labelElement.innerText !== 'Theme'
+            )
+                return update();
+            document.startViewTransition(() => update());
+        };
+        ctrl.addBinding(config, 'animate', {
+            label: 'Animate',
+        });
+        ctrl.addBinding(config, 'snap', {
+            label: 'Snap',
+        });
+        ctrl.addBinding(config, 'start', {
+            label: 'Hue Start',
+            min: 0,
+            max: 1000,
+            step: 1,
+        });
+        ctrl.addBinding(config, 'end', {
+            label: 'Hue End',
+            min: 0,
+            max: 1000,
+            step: 1,
+        });
+        ctrl.addBinding(config, 'scroll', {
+            label: 'Scrollbar',
+        });
+        ctrl.addBinding(config, 'debug', {
+            label: 'Debug',
+        });
+
+        ctrl.addBinding(config, 'theme', {
+            label: 'Theme',
+            options: {
+                System: 'system',
+                Light: 'light',
+                Dark: 'dark',
+            },
+        });
+
+        ctrl.on('change', sync);
+
+        // backfill the scroll functionality with GSAP
+        if (
+            !CSS.supports('(animation-timeline: scroll()) and (animation-range: 0% 100%)')
+        ) {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // animate the items with GSAP if there's no CSS support
+            items = gsap.utils.toArray('ul li');
+
+            gsap.set(items, { opacity: (i) => (i !== 0 ? 0.2 : 1) });
+
+            const dimmer = gsap
+                .timeline()
+                .to(items.slice(1), {
+                    opacity: 1,
+                    stagger: 0.5,
+                })
+                .to(
+                    items.slice(0, items.length - 1),
+                    {
+                        opacity: 0.2,
+                        stagger: 0.5,
+                    },
+                    0
+                );
+
+            dimmerScrub = ScrollTrigger.create({
+                trigger: items[0],
+                endTrigger: items[items.length - 1],
+                start: 'center center',
+                end: 'center center',
+                animation: dimmer,
+                scrub: 0.2,
+            });
+
+            // register scrollbar changer
+            const scroller = gsap.timeline().fromTo(
+                document.documentElement,
+                {
+                    '--hue': config.start,
+                },
+                {
+                    '--hue': config.end,
+                    ease: 'none',
+                }
+            );
+
+            scrollerScrub = ScrollTrigger.create({
+                trigger: items[0],
+                endTrigger: items[items.length - 1],
+                start: 'center center',
+                end: 'center center',
+                animation: scroller,
+                scrub: 0.2,
+            });
+
+            chromaEntry = gsap.fromTo(
+                document.documentElement,
+                {
+                    '--chroma': 0,
+                },
+                {
+                    '--chroma': 0.3,
+                    ease: 'none',
+                    scrollTrigger: {
+                        scrub: 0.2,
+                        trigger: items[0],
+                        start: 'center center+=40',
+                        end: 'center center',
+                    },
+                }
+            );
+            chromaExit = gsap.fromTo(
+                document.documentElement,
+                {
+                    '--chroma': 0.3,
+                },
+                {
+                    '--chroma': 0,
+                    ease: 'none',
+                    scrollTrigger: {
+                        scrub: 0.2,
+                        trigger: items[items.length - 2],
+                        start: 'center center',
+                        end: 'center center-=40',
+                    },
+                }
+            );
+        }
+        // run it
+        update();
+    </script>
+</body>
+</html>

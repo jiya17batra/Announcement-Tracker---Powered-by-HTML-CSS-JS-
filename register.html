@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="register.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            color: cyan;
+            font-family: Arial, sans-serif;
+        }
+        .book {
+            display: flex;
+            width: 700px;
+            height: auto;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px cyan;
+            overflow: hidden;
+            padding: 20px;
+        }
+        .page {
+            width: 50%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        input, select {
+            width: 90%;
+            padding: 8px;
+            margin: 5px 0;
+            background: black;
+            color: cyan;
+            border: 1px solid cyan;
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            background: cyan;
+            color: black;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <form class="book" onsubmit="return validateForm(event)">
+        <!-- Left Page -->
+        <div class="page">
+            <h2>Register an Account</h2>
+            <input type="text" id="fullName" placeholder="Full Name" required>
+            <p class="error" id="nameError"></p>
+            <input type="email" id="email" placeholder="Email" required>
+            <p class="error" id="emailError"></p>
+            <input type="text" id="phone" placeholder="Phone Number" required>
+            <p class="error" id="phoneError"></p>
+            <input type="text" id="userId" placeholder="User ID" required>
+            <p class="error" id="userIdError"></p>
+        </div>
+        <!-- Right Page -->
+        <div class="page">
+            <input type="password" id="password" placeholder="Password" required>
+            <p class="error" id="passwordError"></p>
+            <label>Gender:</label>
+            <select id="gender" required>
+                <option value="" disabled selected>Select</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+            <p class="error" id="genderError"></p>
+            <label>Date of Birth:</label>
+            <input type="date" id="dob" required>
+            <p class="error" id="dobError"></p>
+            <label>Blood Group:</label>
+            <select id="bloodGroup" required>
+                <option value="" disabled selected>Select</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+            <p class="error" id="bloodError"></p>
+            <button type="submit">Register</button>
+        </div>
+    </form>
+
+    <script>
+        function validateForm(event) {
+            event.preventDefault(); // Prevents default form submission
+            let valid = true;
+        
+            // Clear previous errors
+            document.querySelectorAll('.error').forEach(el => el.innerText = '');
+        
+            // Full Name validation
+            let fullName = document.getElementById("fullName").value.trim();
+            if (fullName.length < 3) {
+                document.getElementById("nameError").innerText = "Name must be at least 3 characters long";
+                valid = false;
+            }
+        
+            // Email validation
+            let email = document.getElementById("email").value.trim();
+            let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!emailPattern.test(email)) {
+                document.getElementById("emailError").innerText = "Enter a valid email";
+                valid = false;
+            }
+        
+            // Phone validation
+            let phone = document.getElementById("phone").value.trim();
+            if (!/^\d{10}$/.test(phone)) {
+                document.getElementById("phoneError").innerText = "Enter a valid 10-digit phone number";
+                valid = false;
+            }
+        
+            // User ID validation
+            let userId = document.getElementById("userId").value.trim();
+            if (userId.length < 5) {
+                document.getElementById("userIdError").innerText = "User ID must be at least 5 characters";
+                valid = false;
+            }
+        
+            // Password validation
+            let password = document.getElementById("password").value.trim();
+            if (password.length < 6) {
+                document.getElementById("passwordError").innerText = "Password must be at least 6 characters";
+                valid = false;
+            }
+        
+            // Gender validation
+            let gender = document.getElementById("gender").value;
+            if (!gender) {
+                document.getElementById("genderError").innerText = "Please select gender";
+                valid = false;
+            }
+        
+            // DOB validation
+            let dob = document.getElementById("dob").value;
+            if (!dob) {
+                document.getElementById("dobError").innerText = "Please select date of birth";
+                valid = false;
+            }
+        
+            // Blood Group validation
+            let bloodGroup = document.getElementById("bloodGroup").value;
+            if (!bloodGroup) {
+                document.getElementById("bloodError").innerText = "Please select blood group";
+                valid = false;
+            }
+        
+            // If all fields are valid, send data
+            if (valid) {
+                sendData();
+            }
+        }
+        
+        // Function to send data to backend
+        function sendData() {
+            let formData = {
+                fullName: document.getElementById("fullName").value.trim(),
+                email: document.getElementById("email").value.trim(),
+                phone: document.getElementById("phone").value.trim(),
+                userId: document.getElementById("userId").value.trim(),
+                password: document.getElementById("password").value.trim(),
+                gender: document.getElementById("gender").value,
+                dob: document.getElementById("dob").value,
+                bloodGroup: document.getElementById("bloodGroup").value
+            };
+
+            fetch("http://localhost:5000/register", {  // Replace with actual backend URL
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => alert("Registration Successful!"))
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
